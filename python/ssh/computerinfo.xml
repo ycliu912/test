@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+	<intro>信息</intro>
+	<computer id='001'>
+		<host>10.30.22.243</host>
+		<port>22</port>
+		<user>root</user>
+		<pswd>liu0912</pswd>
+	</computer>
+	<computer id='002'>
+		<host>10.30.22.215</host>
+		<port>22</port>
+		<user>root</user>
+		<pswd>vimicro!@#</pswd>
+	</computer>
+</info>
