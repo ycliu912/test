@@ -1,0 +1,41 @@
+#!/bin/bash
+
+viss_path="/home/viss311"
+
+if [ -e $viss_path ];then
+  :
+else
+ echo "$viss_path doesn't exit. "
+ exit 1
+fi
+
+ls -l ${viss_path}/* | grep '>' | cut -d'>' -f 2 | sed 's/\.\/\(.*\)/\1/' | awk -F '_|-' '{print $1"\t\t"$2}' | tr -d "^ "
+
+ls -l ${viss_path}/* | grep '>' | cut -d '>' -f2 | sed 's/\.\/\(.*\)/\1/' | tr -d "^ " | sort | uniq >>/tmp/tmp_01.$$
+
+while read line
+do
+  find "${viss_path}" -name "${line}" -print >>/tmp/tmp_02.$$
+done </tmp/tmp_01.$$
+
+while read line
+do
+  name_module=`basename ${line} | awk -F '-|_' '{print $1}'`
+  link_version=`basename ${line} | awk -F '-|_' '{print $2}'`
+
+  file_compressed_exist=`ls ${line} | grep -E 'zip|tar\.gz' >/dev/null 2>&1 ; echo $?`
+  if [ "${file_compressed_exist}" -ne 0 ] ; then
+     echo "${name_module}'s compressed file doesn't exit,it's real version doesn't confirm using this script."
+     continue
+  fi
+
+  real_version=`ls ${line} | grep -E 'zip|tar\.gz' | awk -F '-|_' '{print $2}'`
+  if [ "${real_version}" == "${link_version}" ] ; then
+       :
+     else
+       echo  "${name_module}'s link_version not correct ,it's real version is ${real_version}"
+  fi
+done </tmp/tmp_02.$$
+
+rm -rf /tmp/tmp_01.$$
+rm -rf /tmp/tmp_02.$$
