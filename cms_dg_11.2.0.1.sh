@@ -3,7 +3,6 @@
 # HA script for ViSS 3.2 product                               #
 # This script is tested under Linux and Solaris                #
 # Version: 1.0                                                 #
-# Author:  Tang, Hongxing                                      #
 # Date:    2011-06-27                                          #
 ################################################################
 
